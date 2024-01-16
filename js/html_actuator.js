@@ -67,9 +67,9 @@ HTMLActuator.prototype.addTile = function (tile) {
   this.applyClasses(wrapper, classes);
 
   inner.classList.add("tile-inner");
-  // inner.textContent = tile.value;
-  // img.style.width = '100%';
+
   img.src = "style/img/" + tile.value + ".jpg";
+  img.alt = Localize(tile.value) + ".jpg";
   inner.appendChild(img);
 
   if (tile.previousPosition) {

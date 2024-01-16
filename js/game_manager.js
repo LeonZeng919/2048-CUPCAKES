@@ -1,12 +1,12 @@
 function GameManager(size, InputManager, Actuator, StorageManager) {
-  this.size           = size; // Size of the grid
-  this.inputManager   = new InputManager;
+  this.size = size; // Size of the grid
+  this.inputManager = new InputManager;
   this.storageManager = new StorageManager;
-  this.actuator       = new Actuator;
+  this.actuator = new Actuator;
 
-  this.startTiles     = 2;
+  this.startTiles = 2;
 
-/*   this.inputManager.on("crowd", this.crowd.bind(this)); */
+  /*   this.inputManager.on("crowd", this.crowd.bind(this)); */
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
@@ -18,19 +18,19 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
 // Set Prices
 function kcal(exp) {
   var kcal = [];
-  kcal[2]=200;
-  kcal[4]=250;
-  kcal[8]=320;
-  kcal[16]=400;
-  kcal[32]=500;
-  kcal[64]=650;
-  kcal[128]=820;
-  kcal[256]=1000;
-  kcal[512]=1200;
-  kcal[1024]=1500;
-  kcal[2048]=2000;
-  kcal[4096]=3000;
-  kcal[8192]=5000;
+  kcal[2] = 200;
+  kcal[4] = 250;
+  kcal[8] = 320;
+  kcal[16] = 400;
+  kcal[32] = 500;
+  kcal[64] = 650;
+  kcal[128] = 820;
+  kcal[256] = 1000;
+  kcal[512] = 1200;
+  kcal[1024] = 1500;
+  kcal[2048] = 2000;
+  kcal[4096] = 3000;
+  kcal[8192] = 5000;
   return kcal[exp];
 }
 
@@ -45,11 +45,11 @@ GameManager.prototype.restart = function () {
 GameManager.prototype.crowd = function () {
   this.storageManager.clearGameState();
   this.actuator.continueGame(); // Clear the game won/lost message
-  this.grid        = new Grid(this.size);
-  this.score       = 0;
-  this.points      = 0;
-  this.over        = false;
-  this.won         = false;
+  this.grid = new Grid(this.size);
+  this.score = 0;
+  this.points = 0;
+  this.over = false;
+  this.won = false;
   this.keepPlaying = false;
   this.actuate();
   var counter = 0;
@@ -84,19 +84,19 @@ GameManager.prototype.setup = function () {
 
   // Reload the game from a previous game if present
   if (previousState) {
-    this.grid        = new Grid(previousState.grid.size,
-                                previousState.grid.cells); // Reload grid
-    this.score       = previousState.score;
-    this.points      = previousState.points;
-    this.over        = previousState.over;
-    this.won         = previousState.won;
+    this.grid = new Grid(previousState.grid.size,
+      previousState.grid.cells); // Reload grid
+    this.score = previousState.score;
+    this.points = previousState.points;
+    this.over = previousState.over;
+    this.won = previousState.won;
     this.keepPlaying = previousState.keepPlaying;
   } else {
-    this.grid        = new Grid(this.size);
-		this.score       = 0;
-		this.points      = 0;
-    this.over        = false;
-    this.won         = false;
+    this.grid = new Grid(this.size);
+    this.score = 0;
+    this.points = 0;
+    this.over = false;
+    this.won = false;
     this.keepPlaying = false;
 
     // Add the initial tiles
@@ -115,20 +115,20 @@ GameManager.prototype.setup = function () {
 
 // Passive localization of page elements
 GameManager.prototype.localizeElements = function () {
-    var elementArray = [
-        'game-intro',
-        'restart-button',
-        'retry-button',
-        'keep-playing-button',
-        'game-explanation',
-        'disclaimer',
-        'tile-legend',
-        'credits'
-      ];
-    for (var i in elementArray) {
-      LocalizeElement(elementArray[i]);
-    }
-  };
+  var elementArray = [
+    'game-intro',
+    'restart-button',
+    'retry-button',
+    'keep-playing-button',
+    'game-explanation',
+    'disclaimer',
+    'tile-legend',
+    'credits'
+  ];
+  for (var i in elementArray) {
+    LocalizeElement(elementArray[i]);
+  }
+};
 
 // Fill legend
 GameManager.prototype.fillLegend = function () {
@@ -146,6 +146,7 @@ GameManager.prototype.fillLegend = function () {
     cell.classList.add('legend-cell');
     cell.classList.add('cell-' + exp);
     img.src = "style/img/" + exp + ".jpg";
+    img.alt = Localize(exp) + ".jpg";
     cell.appendChild(img);
     grid.appendChild(cell);
     row.appendChild(grid);
@@ -179,7 +180,7 @@ GameManager.prototype.actuate = function () {
   if (this.storageManager.getBestScore() < this.score) {
     this.storageManager.setBestScore(this.score);
   }
-	if (this.storageManager.getBestPoints() < this.points) {
+  if (this.storageManager.getBestPoints() < this.points) {
     this.storageManager.setBestPoints(this.points);
   }
   // Clear the state when the game is over (game over only, not win)
@@ -190,11 +191,11 @@ GameManager.prototype.actuate = function () {
   }
 
   this.actuator.actuate(this.grid, {
-		score:      this.score,
-		points:     this.points,
-    over:       this.over,
-    won:        this.won,
-    bestScore:  this.storageManager.getBestScore(),
+    score: this.score,
+    points: this.points,
+    over: this.over,
+    won: this.won,
+    bestScore: this.storageManager.getBestScore(),
     bestPoints: this.storageManager.getBestPoints(),
     terminated: this.isGameTerminated()
   });
@@ -204,11 +205,11 @@ GameManager.prototype.actuate = function () {
 // Represent the current game as an object
 GameManager.prototype.serialize = function () {
   return {
-    grid:        this.grid.serialize(),
-    score:       this.score,
-    points:      this.points,
-    over:        this.over,
-    won:         this.won,
+    grid: this.grid.serialize(),
+    score: this.score,
+    points: this.points,
+    over: this.over,
+    won: this.won,
     keepPlaying: this.keepPlaying
   };
 };
@@ -239,9 +240,9 @@ GameManager.prototype.move = function (direction) {
 
   var cell, tile;
 
-  var vector     = this.getVector(direction);
+  var vector = this.getVector(direction);
   var traversals = this.buildTraversals(vector);
-  var moved      = false;
+  var moved = false;
 
   // Save the current tile positions and remove merger information
   this.prepareTiles();
@@ -254,7 +255,7 @@ GameManager.prototype.move = function (direction) {
 
       if (tile) {
         var positions = self.findFarthestPosition(cell, vector);
-        var next      = self.grid.cellContent(positions.next);
+        var next = self.grid.cellContent(positions.next);
 
         // Only one merger per row traversal?
         if (next && next.value === tile.value && !next.mergedFrom) {
@@ -299,9 +300,9 @@ GameManager.prototype.move = function (direction) {
 GameManager.prototype.getVector = function (direction) {
   // Vectors representing tile movement
   var map = {
-    0: { x: 0,  y: -1 }, // Up
-    1: { x: 1,  y: 0 },  // Right
-    2: { x: 0,  y: 1 },  // Down
+    0: { x: 0, y: -1 }, // Up
+    1: { x: 1, y: 0 },  // Right
+    2: { x: 0, y: 1 },  // Down
     3: { x: -1, y: 0 }   // Left
   };
 
@@ -330,9 +331,9 @@ GameManager.prototype.findFarthestPosition = function (cell, vector) {
   // Progress towards the vector direction until an obstacle is found
   do {
     previous = cell;
-    cell     = { x: previous.x + vector.x, y: previous.y + vector.y };
+    cell = { x: previous.x + vector.x, y: previous.y + vector.y };
   } while (this.grid.withinBounds(cell) &&
-           this.grid.cellAvailable(cell));
+    this.grid.cellAvailable(cell));
 
   return {
     farthest: previous,
@@ -357,9 +358,9 @@ GameManager.prototype.tileMatchesAvailable = function () {
       if (tile) {
         for (var direction = 0; direction < 4; direction++) {
           var vector = self.getVector(direction);
-          var cell   = { x: x + vector.x, y: y + vector.y };
+          var cell = { x: x + vector.x, y: y + vector.y };
 
-          var other  = self.grid.cellContent(cell);
+          var other = self.grid.cellContent(cell);
 
           if (other && other.value === tile.value) {
             return true; // These two tiles can be merged
