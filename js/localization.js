@@ -53,7 +53,7 @@ String.toLocaleString({
     "%game-explanation":
       '<strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> to move the tiles. When two tiles with the same symbol touch, they <strong>get promoted!</strong>',
     "%disclaimer":
-      '<strong class="important">Note:</strong> This site <a href="https://2048cupcakes.fun">2048cupcakes.funs</a> is a spin-off of the official version of 2048 created by Gabriele Cirulli.',
+      '<strong class="important">Note:</strong> This site <a href="https://2048cupcakes.fun">2048cupcakes.fun</a> is a spin-off of the official version of 2048 created by Gabriele Cirulli.',
     "%credits":
       'Cupcakes images by <a href="http://www.georgetowncupcake.com/" title="Georgetown Cupcake | DC Cupcakes | About">Georgetown Cupcake</a>.',
     "%tweet1": 'I scored "',
